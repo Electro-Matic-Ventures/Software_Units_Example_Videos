@@ -1,0 +1,21 @@
+﻿FUNCTION "is_empty" : Bool
+TITLE = Int[+] Data Array Is Empty
+{ S7_Optimized_Access := 'TRUE' ; Published := 'FALSE' }
+AUTHOR : Machado
+FAMILY : 'Int[+]'
+VERSION : 0.1
+//returns true if array is empty
+   VAR_INPUT 
+      buffer : "IntStack.UDT";
+   END_VAR
+
+
+BEGIN
+	IF #buffer.length = 0 THEN
+	    #is_empty := TRUE;
+	    RETURN;
+	END_IF;
+	#is_empty := FALSE;
+	RETURN;
+END_FUNCTION
+

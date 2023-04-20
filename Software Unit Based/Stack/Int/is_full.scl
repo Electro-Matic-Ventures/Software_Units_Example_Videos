@@ -1,0 +1,26 @@
+﻿FUNCTION "is_full" : Bool
+TITLE = Array Is Full
+{ S7_Optimized_Access := 'TRUE' ; Published := 'FALSE' }
+AUTHOR : Machado
+FAMILY : 'Int[+]'
+VERSION : 0.1
+//returns true if array is full
+   VAR_INPUT 
+      buffer : "IntStack.UDT";
+   END_VAR
+
+   VAR_TEMP 
+      size : DInt;
+   END_VAR
+
+
+BEGIN
+	#size := UDINT_TO_DINT("count_of_elements"(#buffer.data));
+	IF #buffer.length = #size THEN
+	    #is_full := TRUE;
+	    RETURN;
+	END_IF;
+	#is_full := FALSE;
+	RETURN;
+END_FUNCTION
+

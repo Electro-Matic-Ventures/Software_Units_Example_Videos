@@ -1,0 +1,45 @@
+﻿FUNCTION "pop" : String
+{ S7_Optimized_Access := 'TRUE' ; Published := 'FALSE' }
+AUTHOR : Machado
+FAMILY : 'Int[+]'
+VERSION : 0.1
+//do not use with Add
+   VAR_INPUT 
+      null_token : Int;
+   END_VAR
+
+   VAR_OUTPUT 
+      value : Int;
+   END_VAR
+
+   VAR_IN_OUT 
+      buffer : "IntStack.UDT";
+   END_VAR
+
+   VAR CONSTANT 
+      ARRAY_EMPTY : String := 'array empty. no operation.';
+      POPPED : String := 'popped';
+   END_VAR
+
+
+BEGIN
+	REGION "ARRAY EMPTY"
+	    IF "is_empty"(#buffer) THEN
+	        #value := #null_token;
+	        #pop := #ARRAY_EMPTY;
+	        RETURN;
+	    END_IF;
+	END_REGION
+	
+	
+	REGION "POP"
+	    #value := #buffer.data[#buffer.remove];
+	    #buffer.data[#buffer.remove] := #null_token;
+	    #buffer.add -= 1;
+	    #buffer.remove -= 1;
+	    #buffer.length -= 1;
+	    #pop := #POPPED;
+	    RETURN;
+	END_REGION
+END_FUNCTION
+

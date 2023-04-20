@@ -1,0 +1,39 @@
+﻿FUNCTION "push" : String
+{ S7_Optimized_Access := 'TRUE' ; Published := 'FALSE' }
+AUTHOR : Machado
+FAMILY : 'Int[+]'
+VERSION : 0.1
+//dont use push with remove
+   VAR_INPUT 
+      value : Int;
+   END_VAR
+
+   VAR_IN_OUT 
+      buffer : "IntStack.UDT";
+   END_VAR
+
+   VAR CONSTANT 
+      ARRAY_FULL : String := 'array full. no operation.';
+      PUSHED : String := 'pushed.';
+   END_VAR
+
+
+BEGIN
+	REGION "ARRAY FULL"
+	    IF "is_full"(#buffer) THEN
+	        #push := #ARRAY_FULL;
+	        RETURN;
+	    END_IF;
+	END_REGION
+	
+	
+	REGION "PUSH"
+	    #buffer.data[#buffer.add] := #value;
+	    #buffer.add += 1;
+	    #buffer.remove += 1;
+	    #buffer.length += 1;
+	    #push := #PUSHED;
+	    RETURN;
+	END_REGION
+END_FUNCTION
+

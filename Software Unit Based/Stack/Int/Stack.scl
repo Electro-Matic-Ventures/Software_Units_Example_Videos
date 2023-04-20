@@ -1,0 +1,41 @@
+﻿FUNCTION_BLOCK "Stack"
+{ S7_Optimized_Access := 'TRUE' ; Published := 'TRUE' }
+VERSION : 0.1
+   VAR_IN_OUT 
+      interface : "Stack.Interface.UDT";
+   END_VAR
+
+   VAR 
+      data { S7_SetPoint := 'False'} : "IntStack.UDT";
+   END_VAR
+
+   VAR_TEMP 
+      blank_interface : "Stack.Interface.UDT";
+   END_VAR
+
+
+BEGIN
+	IF #interface.clear THEN
+	    #interface := #blank_interface;
+	    #interface.status := "clear"(default_add_index := 0,
+	                                 default_remove_index := -1,
+	                                 null_token := "NULL_TOKEN",
+	                                 buffer := #data);
+	END_IF;
+	
+	IF #interface.pop THEN
+	    #interface.pop := FALSE;
+	    #interface.status := "pop"(null_token := "NULL_TOKEN",
+	                               value => #interface.value,
+	                               buffer := #data);
+	END_IF;
+	
+	IF #interface.push THEN
+	    #interface.push := FALSE;
+	    #interface.status := "push"(value := #interface.value,
+	                                buffer := #data);
+	    #interface.value := "NULL_TOKEN"; 
+	END_IF;
+	
+END_FUNCTION_BLOCK
+

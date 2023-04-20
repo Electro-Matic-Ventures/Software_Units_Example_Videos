@@ -1,0 +1,13 @@
+﻿FUNCTION "count_of_elements" : UDInt
+{ S7_Optimized_Access := 'TRUE' ; Published := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      data : Variant;
+   END_VAR
+
+
+BEGIN
+	#count_of_elements := CountOfElements(#data);
+	RETURN;
+END_FUNCTION
+
